@@ -1,3 +1,4 @@
+from io import BytesIO
 from django.db.models import Sum
 from recipes.models import RecipeIngredient
 
@@ -19,4 +20,4 @@ def create_shopping_list(user):
     )
     shopping_list.extend(ingredient_list)
 
-    return '\n'.join(shopping_list)
+    return BytesIO('\n'.join(shopping_list).encode('utf-8'))
