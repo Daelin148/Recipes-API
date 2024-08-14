@@ -1,8 +1,8 @@
 from api.pagination import LimitPagePagination
 from api.permissions import IsAuthorAdminAuthenticated
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import FileResponse, HttpResponse
 from django.db.models import Exists, OuterRef, Value
+from django.http import FileResponse
 from django.shortcuts import get_object_or_404, redirect
 from django_filters.rest_framework import DjangoFilterBackend
 from djoser.views import UserViewSet as DjoserUserViewSet
@@ -63,9 +63,11 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = Recipe.objects.select_related('author').prefetch_related(
-        'ingredients'
+            'ingredients'
         ).all()
-        user = self.request.user if self.request.user.is_authenticated else None
+        user = self.request.user if (
+            self.request.user.is_authenticated
+        ) else None
         favorite = FavoriteRecipe.objects.filter(
             user=user if user else Value(None),
             recipe=OuterRef('pk')
@@ -79,7 +81,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
             is_in_shopping_cart=Exists(shopping_cart),
         )
         return queryset
-    
+
     def perform_create(self, serializer):
         return serializer.save(author=self.request.user)
 
@@ -211,7 +213,9 @@ class UserViewSet(DjoserUserViewSet):
 
     def get_queryset(self):
         queryset = User.objects.all()
-        user = self.request.user if self.request.user.is_authenticated else None
+        user = self.request.user if (
+            self.request.user.is_authenticated
+        ) else None
         subscriptions = Follower.objects.filter(
             user=user if user else Value(None),
             author=OuterRef('pk')
@@ -255,7 +259,7 @@ class UserViewSet(DjoserUserViewSet):
 
     @subscribe.mapping.delete
     def delete_subscribe(self, request, id=None):
-        """Отписаться от пользователя."""        
+        """Отписаться от пользователя."""
 
         user = request.user
         author = get_object_or_404(User, id=id)

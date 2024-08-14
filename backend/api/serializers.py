@@ -1,14 +1,13 @@
-from django.db import transaction
 from django.conf import settings
-from djoser.serializers import (
+from django.db import transaction
+from djoser.serializers import \
     UserCreateSerializer as DjoserUserCreateSerializer
-)
 from djoser.serializers import UserSerializer as DjoserUserSerializer
 from drf_extra_fields.fields import Base64ImageField
 from recipes.models import (FavoriteRecipe, Ingredient, Recipe,
                             RecipeIngredient, ShoppingCart, ShortLink, Tag)
 from rest_framework import serializers
-from users.models import Follower, User
+from users.models import User
 
 
 class UserSerializer(DjoserUserSerializer):
@@ -165,9 +164,9 @@ class RecipeCreateSerializer(serializers.ModelSerializer):
         }
         ingredients_list = [
             RecipeIngredient(
-            recipe=recipe,
-            ingredient=ingredients_dict[ingredient['id']],
-            amount=ingredient['amount']
+                recipe=recipe,
+                ingredient=ingredients_dict[ingredient['id']],
+                amount=ingredient['amount']
             ) for ingredient in ingredients
         ]
         RecipeIngredient.objects.bulk_create(ingredients_list)
