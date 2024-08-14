@@ -158,6 +158,8 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
 
 class UserViewSet(DjoserUserViewSet):
+    """Вьюсет кастомной модели пользователя."""
+
     queryset = User.objects.all()
     serializer_class = UserSerializer
     pagination_class = LimitPagePagination
@@ -234,6 +236,7 @@ class UserViewSet(DjoserUserViewSet):
         permission_classes=(IsAuthenticated,)
     )
     def avatar(self, request, *args, **kwargs):
+        """Вью для установки аватара пользователя."""
 
         user = request.user
         serializer = AvatarUserSerializer(user, data=request.data)
@@ -249,6 +252,8 @@ class UserViewSet(DjoserUserViewSet):
 
     @avatar.mapping.delete
     def delete_avatar(self, request, *args, **kwargs):
+        """Вью для удаления аватара пользователя."""
+
         user = request.user
         if user.avatar:
             user.avatar.delete()

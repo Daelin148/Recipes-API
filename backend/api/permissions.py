@@ -2,6 +2,10 @@ from rest_framework import permissions
 
 
 class IsAuthorAdminAuthenticated(permissions.BasePermission):
+    """
+    Пермишн для проверки является ли пользователь автором рецепта либо админом.
+    В остальных случаях доступ для чтения.
+    """
 
     def has_permission(self, request, view):
         return (request.method in permissions.SAFE_METHODS

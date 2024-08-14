@@ -72,7 +72,10 @@ class IngredientSerializer(serializers.ModelSerializer):
 
 
 class RecipeIngredientGetSerializer(serializers.ModelSerializer):
-    """Сериализатор ингредиентов в рецепте."""
+    """
+    Сериализатор для связанной модели
+    ингредиентов рецепта при получении рецепта.
+    """
 
     id = serializers.IntegerField(source='ingredient.id')
     name = serializers.CharField(source='ingredient.name')
@@ -87,6 +90,11 @@ class RecipeIngredientGetSerializer(serializers.ModelSerializer):
 
 
 class RecipeIngredientCreateSerializer(serializers.ModelSerializer):
+    """
+    Сериализатор для связанной модели
+    ингредиентов рецепта при создании рецепта.
+    """
+
     id = serializers.IntegerField()
     amount = serializers.IntegerField(write_only=True)
 
