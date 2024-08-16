@@ -1,14 +1,10 @@
 from django.conf import settings
 from django.db import transaction
-from djoser.serializers import (
+from djoser.serializers import \
     UserCreateSerializer as DjoserUserCreateSerializer
-)
 from djoser.serializers import UserSerializer as DjoserUserSerializer
 from drf_extra_fields.fields import Base64ImageField
-from recipes.models import (
-    Ingredient, Recipe,
-    RecipeIngredient, ShortLink, Tag
-)
+from recipes.models import Ingredient, Recipe, RecipeIngredient, ShortLink, Tag
 from rest_framework import serializers
 from users.models import User
 
