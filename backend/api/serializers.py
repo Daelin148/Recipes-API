@@ -1,11 +1,14 @@
 from django.conf import settings
 from django.db import transaction
-from djoser.serializers import \
+from djoser.serializers import (
     UserCreateSerializer as DjoserUserCreateSerializer
+)
 from djoser.serializers import UserSerializer as DjoserUserSerializer
 from drf_extra_fields.fields import Base64ImageField
-from recipes.models import (FavoriteRecipe, Ingredient, Recipe,
-                            RecipeIngredient, ShoppingCart, ShortLink, Tag)
+from recipes.models import (
+    Ingredient, Recipe,
+    RecipeIngredient, ShortLink, Tag
+)
 from rest_framework import serializers
 from users.models import User
 
@@ -123,24 +126,6 @@ class RecipeGetSerializer(serializers.ModelSerializer):
             'is_in_shopping_cart', 'name', 'image', 'text', 'cooking_time'
         )
         read_only_fields = ('id', 'author', 'tags', 'ingredients')
-
-    def get_is_favorited(self, obj):
-        user = self.context['request'].user
-        if user.is_authenticated:
-            return FavoriteRecipe.objects.filter(
-                user=user,
-                recipe=obj
-            ).exists()
-        return False
-
-    def get_is_in_shopping_cart(self, obj):
-        user = self.context['request'].user
-        if user.is_authenticated:
-            return ShoppingCart.objects.filter(
-                user=user,
-                recipe=obj
-            ).exists()
-        return False
 
 
 class RecipeCreateSerializer(serializers.ModelSerializer):
