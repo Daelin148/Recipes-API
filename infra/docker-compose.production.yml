@@ -17,8 +17,8 @@ services:
     image: win1887/foodgram-backend
     env_file: ../.env
     volumes:
-      - static:/static
-      - media:/app/media
+      - static:/app/static/
+      - media:/app/media/
     depends_on:
       - db
 
@@ -38,6 +38,7 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
       - ../frontend/build:/usr/share/nginx/html/
-      - ../docs/:/usr/share/nginx/html/api/docs/
-      - static:/static
-      - media:/app/media
+      - ../docs/redoc.html:/usr/share/nginx/html/api/docs/redoc.html
+      - ../docs/openapi-schema.yml:/usr/share/nginx/html/api/docs/openapi-schema.yml
+      - static:/var/html/static/
+      - media:/var/html/media/
