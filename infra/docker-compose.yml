@@ -18,7 +18,7 @@ services:
     container_name: foodgram-backend
     env_file: ../.env
     volumes:
-      - static:/app/static/
+      - static:/app/backend_static/
       - media:/app/media/
     depends_on:
       - db
