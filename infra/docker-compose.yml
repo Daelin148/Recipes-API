@@ -18,8 +18,9 @@ services:
     container_name: foodgram-backend
     env_file: ../.env
     volumes:
-      - static:/backend_static
+      - static:/static
       - media:/app/media
+      - ../backend:/app
     depends_on:
       - db
 
@@ -36,7 +37,7 @@ services:
     container_name: foodgram-proxy
     image: nginx:1.25.4-alpine
     ports:
-      - "80:80"
+      - "9090:80"
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
       - ../frontend/build:/usr/share/nginx/html/
