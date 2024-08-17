@@ -17,7 +17,7 @@ services:
     image: win1887/foodgram-backend
     env_file: ../.env
     volumes:
-      - static:/backend_static
+      - static:/static
       - media:/app/media
     depends_on:
       - db
