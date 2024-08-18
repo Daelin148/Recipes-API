@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.db import transaction
 from djoser.serializers import \
     UserCreateSerializer as DjoserUserCreateSerializer
