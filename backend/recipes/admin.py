@@ -1,6 +1,6 @@
 from django.contrib import admin
 from recipes.models import (FavoriteRecipe, Ingredient, Recipe,
-                            RecipeIngredient, ShoppingCart, Tag)
+                            RecipeIngredient, ShoppingCart, Tag, ShortLink)
 
 
 @admin.register(Tag)
@@ -48,3 +48,9 @@ class RecipeAdmin(admin.ModelAdmin):
     @admin.display(description='Количество избранных рецептов')
     def favorites_count(self, obj):
         return obj.favorite.count()
+
+
+admin.register(ShortLink)
+class ShortLinkAdmin:
+    list_display = '__all__'
+    list_editable = '__all__'
