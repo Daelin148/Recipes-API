@@ -282,7 +282,7 @@ class ShortLinkSerializer(serializers.ModelSerializer):
     def get_short_link(self, obj):
         """Создает полный URL для короткой ссылки."""
 
-        base_url = f'{settings.BASE_DIR}/s/'
+        base_url = 'https://127.0.0.1:8000/s/'
         return f"{base_url}{obj.short_link}"
 
     def to_representation(self, instance):
