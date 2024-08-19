@@ -1,6 +1,7 @@
 from io import BytesIO
 
 from django.db.models import Sum
+
 from recipes.models import RecipeIngredient
 
 

@@ -3,8 +3,9 @@ from djoser.serializers import \
     UserCreateSerializer as DjoserUserCreateSerializer
 from djoser.serializers import UserSerializer as DjoserUserSerializer
 from drf_extra_fields.fields import Base64ImageField
-from recipes.models import Ingredient, Recipe, RecipeIngredient, ShortLink, Tag
 from rest_framework import serializers
+
+from recipes.models import Ingredient, Recipe, RecipeIngredient, ShortLink, Tag
 from users.models import User
 
 
@@ -281,7 +282,7 @@ class ShortLinkSerializer(serializers.ModelSerializer):
     def get_short_link(self, obj):
         """Создает полный URL для короткой ссылки."""
 
-        base_url = 'http://62.84.123.32:9090/s/'
+        base_url = 'https://myfoodgramproject.zapto.org/s/'
         return f"{base_url}{obj.short_link}"
 
     def to_representation(self, instance):

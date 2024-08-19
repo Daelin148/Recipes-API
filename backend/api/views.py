@@ -1,17 +1,18 @@
-from api.pagination import LimitPagePagination
-from api.permissions import IsAuthorAdminAuthenticated
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Exists, OuterRef, Value
 from django.http import FileResponse
 from django.shortcuts import get_object_or_404, redirect
 from django_filters.rest_framework import DjangoFilterBackend
 from djoser.views import UserViewSet as DjoserUserViewSet
-from recipes.models import (FavoriteRecipe, Ingredient, Recipe, ShoppingCart,
-                            ShortLink, Tag)
 from rest_framework import status, viewsets
 from rest_framework.decorators import action, api_view
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
+
+from api.pagination import LimitPagePagination
+from api.permissions import IsAuthorAdminAuthenticated
+from recipes.models import (FavoriteRecipe, Ingredient, Recipe, ShoppingCart,
+                            ShortLink, Tag)
 from users.models import Follower, User
 
 from .filters import IngredientFilter, RecipeFilter
@@ -204,6 +205,16 @@ class RecipeViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+@api_view(['GET'])
+def redirect_short_link(request, short_link):
+    """Перенаправляет на соответствующий рецепт по короткой ссылке."""
+
+    short_link_obj = get_object_or_404(ShortLink, short_link=short_link)
+    redirect_url = ('https://myfoodgramproject.zapto.org/'
+                    f'recipes/{short_link_obj.recipe.id}/')
+    return redirect(redirect_url)
+
+
 class UserViewSet(DjoserUserViewSet):
     """Вьюсет кастомной модели пользователя."""
 
@@ -327,25 +338,3 @@ class UserViewSet(DjoserUserViewSet):
             {'detail': 'Аватар не установлен.'},
             status=status.HTTP_400_BAD_REQUEST
         )
-
-
-@api_view(['GET'])
-def get_short_link(request, recipe_id):
-    """
-    Получение или создание короткой ссылки для рецепта.
-    """
-
-    recipe = get_object_or_404(Recipe, id=recipe_id)
-
-    short_link, created = ShortLink.objects.get_or_create(recipe=recipe)
-
-    serializer = ShortLinkSerializer(short_link)
-    return Response(serializer.data, status=status.HTTP_200_OK)
-
-
-@api_view(['GET'])
-def redirect_short_link(request, short_link):
-    """Перенаправляет на соответствующий рецепт по короткой ссылке."""
-
-    short_link_obj = get_object_or_404(ShortLink, short_link=short_link)
-    return redirect('recipes-detail', pk=short_link_obj.recipe.id)
