@@ -3,9 +3,8 @@ from djoser.serializers import \
     UserCreateSerializer as DjoserUserCreateSerializer
 from djoser.serializers import UserSerializer as DjoserUserSerializer
 from drf_extra_fields.fields import Base64ImageField
-from rest_framework import serializers
-
 from recipes.models import Ingredient, Recipe, RecipeIngredient, ShortLink, Tag
+from rest_framework import serializers
 from users.models import User
 
 
