@@ -199,7 +199,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
         permission_classes=[IsAuthenticated],
         url_path='get-link'
     )
-    def get_link(self, request, pk=None):
+    def get_link(self, request, pk):
         """Получить короткую ссылку на рецепт."""
 
         recipe = self.get_object()
