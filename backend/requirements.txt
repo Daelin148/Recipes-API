@@ -14,6 +14,7 @@ djangorestframework==3.12.4
 djangorestframework-simplejwt==4.7.2
 djoser==2.1.0
 flake8==7.1.1
+flake8-isort==6.1.1
 idna==3.7
 isort==5.13.2
 itypes==1.2.0
