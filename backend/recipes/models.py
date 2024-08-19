@@ -177,10 +177,18 @@ class ShoppingCart(models.Model):
 class ShortLink(models.Model):
     """Модель для хранения коротких ссылок на рецепты."""
 
-    recipe = models.OneToOneField(Recipe, on_delete=models.CASCADE,
-                                  related_name='short_link')
-    short_link = models.CharField(max_length=3, unique=True,
-                                  blank=True, null=True)
+    recipe = models.OneToOneField(
+        Recipe, on_delete=models.CASCADE,
+        related_name='short_link', verbose_name='Рецепт'
+    )
+    short_link = models.CharField(
+        max_length=3, unique=True,
+        blank=True, null=True, verbose_name='Короткая ссылка'
+    )
+
+    class Meta:
+        verbose_name = 'Короткая ссылка'
+        verbose_name_plural = 'Короткиу ссылки'
 
     def save(self, *args, **kwargs):
         if not self.short_link:
