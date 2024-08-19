@@ -196,7 +196,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
     @action(
         detail=True, methods=['get'],
-        permission_classes=[IsAuthenticated],
+        permission_classes=[AllowAny],
         url_path='get-link'
     )
     def get_link(self, request, pk):
