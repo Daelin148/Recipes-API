@@ -53,4 +53,4 @@ class RecipeAdmin(admin.ModelAdmin):
 @admin.register(ShortLink)
 class ShortLinkAdmin(admin.ModelAdmin):
     list_display = ('id', 'recipe', 'short_link')
-    list_editable = ('id', 'recipe', 'short_link')
+    list_editable = ('recipe', 'short_link')
