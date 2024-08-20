@@ -45,6 +45,11 @@ class RecipeAdmin(admin.ModelAdmin):
     readonly_fields = ('author', 'favorites_count')
     inlines = (IngredientsInline,)
 
+    def get_form(self, request, *args, **kwargs):
+        form_class = super().get_form(request, *args, **kwargs)
+        form_class.base_fields['author'].initial = request.user
+        return form_class
+
     @admin.display(description='Количество избранных рецептов')
     def favorites_count(self, obj):
         return obj.favorite.count()
